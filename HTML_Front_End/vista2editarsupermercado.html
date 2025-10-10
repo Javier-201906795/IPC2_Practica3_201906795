@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gestión de Productos · Super Mercado</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <header class="bg-dark text-white">
+      <nav class="navbar navbar-expand-lg navbar-dark container py-3">
+        <a class="navbar-brand" href="#inicio">Super Mercado</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarGestion"
+          aria-controls="navbarGestion"
+          aria-expanded="false"
+          aria-label="Alternar navegación"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarGestion">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#crear">Crear</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#consultar">Consultar</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container my-5" id="inicio">
+      <div class="text-center mb-5">
+        <h1 class="fw-bold display-5">Gestión de Productos</h1>
+        <p class="text-muted mb-0">
+          Administra el catálogo del supermercado: crea, consulta, actualiza y elimina productos.
+        </p>
+      </div>
+
+      <section id="crear" class="mb-5">
+        <article class="card border-0 shadow-sm overflow-hidden">
+          <div class="bg-success bg-gradient text-white p-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <h2 class="h4 mb-0">Crear nuevo producto</h2>
+              <span class="badge bg-white text-success">Alta</span>
+            </div>
+          </div>
+          <!-- Formulario de creación: conecta la acción con el endpoint POST del backend -->
+          <div class="card-body bg-light">
+            <form class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label" for="crearNombre">Nombre</label>
+                <input class="form-control" id="crearNombre" name="nombre" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="crearCategoria">Categoría</label>
+                <input class="form-control" id="crearCategoria" name="categoria" required />
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="crearDescripcion">Descripción</label>
+                <textarea
+                  class="form-control"
+                  id="crearDescripcion"
+                  name="descripcion"
+                  rows="3"
+                  required
+                ></textarea>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="crearPrecio">Precio (Q)</label>
+                <input
+                  class="form-control"
+                  id="crearPrecio"
+                  name="precio"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="crearStock">Cantidad en stock</label>
+                <input
+                  class="form-control"
+                  id="crearStock"
+                  name="stock"
+                  type="number"
+                  min="0"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="crearVencimiento">Fecha de vencimiento</label>
+                <input
+                  class="form-control"
+                  id="crearVencimiento"
+                  name="vencimiento"
+                  type="date"
+                />
+              </div>
+              <div class="col-12 d-flex justify-content-end">
+                <button class="btn btn-success px-4" type="submit">Guardar producto</button>
+              </div>
+            </form>
+          </div>
+        </article>
+      </section>
+
+      <section id="consultar" class="mb-5">
+        <article class="card border-0 shadow-sm overflow-hidden">
+          <div class="bg-primary bg-gradient text-white p-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <h2 class="h4 mb-0">Consultar productos</h2>
+              <span class="badge bg-white text-primary">Lectura</span>
+            </div>
+          </div>
+          <!-- Tabla de consulta: reemplaza el contenido del <tbody> con datos del backend -->
+          <div class="card-body bg-light">
+            <div class="d-flex flex-column flex-lg-row gap-3 mb-4">
+              <div class="flex-grow-1">
+                <label class="form-label" for="buscarProducto">Buscar por nombre o categoría</label>
+                <input class="form-control" id="buscarProducto" placeholder="Ej. Yogur" />
+              </div>
+              <div class="align-self-end">
+                <button class="btn btn-outline-primary">Filtrar</button>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Vencimiento</th>
+                    <th class="text-center">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Manzanas Gala</td>
+                    <td>Frutas</td>
+                    <td>Q12.50</td>
+                    <td>85</td>
+                    <td>15/11/2025</td>
+                    <td class="text-center">
+                      <div class="btn-group btn-group-sm" role="group">
+                        <button
+                          class="btn btn-outline-warning text-dark"
+                          type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#modalActualizarProducto"
+                          data-producto-id="manzanas"
+                        >
+                          Actualizar
+                        </button>
+                        <button
+                          class="btn btn-outline-danger"
+                          type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#modalEliminarProducto"
+                          data-producto-id="manzanas"
+                        >
+                          Eliminar
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Arroz Integral</td>
+                    <td>Granos</td>
+                    <td>Q28.90</td>
+                    <td>120</td>
+                    <td>02/06/2026</td>
+                    <td class="text-center">
+                      <div class="btn-group btn-group-sm" role="group">
+                        <button
+                          class="btn btn-outline-warning text-dark"
+                          type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#modalActualizarProducto"
+                          data-producto-id="arroz"
+                        >
+                          Actualizar
+                        </button>
+                        <button
+                          class="btn btn-outline-danger"
+                          type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#modalEliminarProducto"
+                          data-producto-id="arroz"
+                        >
+                          Eliminar
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <!-- Modal: Actualizar producto -->
+    <div
+      class="modal fade"
+      id="modalActualizarProducto"
+      tabindex="-1"
+      aria-labelledby="modalActualizarProductoLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header bg-warning bg-gradient text-dark">
+            <h2 class="modal-title h4" id="modalActualizarProductoLabel">Actualizar producto</h2>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body bg-light">
+            <!-- Formulario de actualización: completa los campos con datos del producto seleccionado -->
+            <form class="row g-3" id="formActualizarProducto">
+              <div class="col-12">
+                <label class="form-label" for="modalActualizarProductoSeleccion">
+                  Producto seleccionado
+                </label>
+                <input
+                  class="form-control"
+                  id="modalActualizarProductoSeleccion"
+                  name="productoId"
+                  readonly
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="modalActualizarNombre">Nombre</label>
+                <input class="form-control" id="modalActualizarNombre" name="nombre" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="modalActualizarCategoria">Categoría</label>
+                <input class="form-control" id="modalActualizarCategoria" name="categoria" required />
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="modalActualizarDescripcion">Descripción</label>
+                <textarea
+                  class="form-control"
+                  id="modalActualizarDescripcion"
+                  name="descripcion"
+                  rows="3"
+                ></textarea>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="modalActualizarPrecio">Precio (Q)</label>
+                <input
+                  class="form-control"
+                  id="modalActualizarPrecio"
+                  name="precio"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="modalActualizarStock">Cantidad en stock</label>
+                <input
+                  class="form-control"
+                  id="modalActualizarStock"
+                  name="stock"
+                  type="number"
+                  min="0"
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="modalActualizarVencimiento">Fecha de vencimiento</label>
+                <input
+                  class="form-control"
+                  id="modalActualizarVencimiento"
+                  name="vencimiento"
+                  type="date"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-warning text-dark" type="submit" form="formActualizarProducto">
+              Guardar cambios
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Eliminar producto -->
+    <div
+      class="modal fade"
+      id="modalEliminarProducto"
+      tabindex="-1"
+      aria-labelledby="modalEliminarProductoLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-danger bg-gradient text-white">
+            <h2 class="modal-title h5" id="modalEliminarProductoLabel">Eliminar producto</h2>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body bg-light">
+            <!-- Confirma la eliminación antes de llamar al endpoint DELETE -->
+            <p class="mb-3 text-secondary">
+              Esta acción eliminará el producto del catálogo. Verifica la información antes de continuar.
+            </p>
+            
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-danger" type="button" id="modalEliminarConfirmar">
+              Eliminar producto
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="bg-dark text-white py-4">
+      <div class="container text-center">
+        <p class="mb-1">&copy; 2025 Super Mercado. Plataforma de administración.</p>
+        <small class="text-muted">Soporte: gestion@supermercado.com · (502) 9876-5432</small>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
