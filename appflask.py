@@ -37,6 +37,19 @@ def inicio():
         print('!!! Error FLASK inicio() !!!\n',e)
 
 
+@app.route('/agregar',   methods=['POST'])
+def agregar():
+    try:
+        baseDatos = app.config['DB']
+        data = request.get_json()  # datos enviados en formato JSON
+
+        print(data)
+        return jsonify(data)
+    except Exception as e:
+        print("!!! Error FLASK agregar() !!!\n", e)
+        return jsonify({"error": "Error interno en agregar()"}), 500
+
+
 @app.route('/editar/<string:nombre>',   methods=['GET','PUT'])
 def editar(nombre):
     try:
