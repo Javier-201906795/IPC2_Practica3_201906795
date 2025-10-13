@@ -46,7 +46,8 @@ def editar(nombre):
         # Buscar el producto en la base de datos
         for producto in baseDatos:
             if producto["nombre"].lower() == nombre.lower():
-                # Actualizar los campos recibidos
+                print("Producto encontrado:", producto)
+                # Actualizar los campos recibidos y si no fue enviado el dato colocar el valor anterior
                 producto.update({
                     "nombre": data.get("nombre", producto["nombre"]),
                     "categoria": data.get("categoria", producto["categoria"]),
