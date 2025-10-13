@@ -51,6 +51,19 @@ def agregar():
             if campo not in data:
                 return jsonify({'Error':f'Falta el campo -> {campo} <- para crear el producto'})
 
+        #Crear 
+        nuevoproducto = {
+            "nombre": data["nombre"],
+            "categoria": data["categoria"],
+            "descripcion": data["descripcion"],
+            "precio": data["precio"],
+            "stock": data["stock"],
+            "vencimiento": data["vencimiento"]
+        }
+
+        #Almacenar
+        baseDatos.append(nuevoproducto)
+
         return jsonify(data)
     except Exception as e:
         print("!!! Error FLASK agregar() !!!\n", e)
