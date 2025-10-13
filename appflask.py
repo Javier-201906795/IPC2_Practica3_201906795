@@ -49,7 +49,6 @@ def editar(nombre):
                 print("Producto encontrado:", producto)
                 # Actualizar los campos recibidos y si no fue enviado el dato colocar el valor anterior
                 producto.update({
-                    "nombre": data.get("nombre", producto["nombre"]),
                     "categoria": data.get("categoria", producto["categoria"]),
                     "descripcion": data.get("descripcion", producto["descripcion"]),
                     "precio": data.get("precio", producto["precio"]),
