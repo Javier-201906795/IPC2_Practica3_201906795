@@ -9,17 +9,64 @@ cors = CORS(app)
 
 
 
+app.config['DB'] = [{
+        "nombre": "Manzanas Gala",
+        "categoria": "Frutas",
+        "descripcion": "Manzanas frescas y crujientes, ideales para snacks saludables o postres.",
+        "precio": 12.50,
+        "stock": 85,
+        "vencimiento": "2025-11-15"
+    },
+    {
+        "nombre": "Bananas",
+        "categoria": "Frutas",
+        "descripcion": "Bananas dulces y maduras, ideales para batidos o desayunos.",
+        "precio": 8.00,
+        "stock": 120,
+        "vencimiento": "2025-11-10"
+    }]
+
+
+
 @app.route('/',   methods=['GET','POST'])
 def inicio():
     try:
-        datos = {
-            "mensaje": "Hola mundo",
-            "estado": "ok",
-            "metodo": request.method
-        }
-        return jsonify(datos) 
+        baseDatos = app.config['DB']
+        return jsonify(baseDatos) 
     except Exception as e:
         print('!!! Error FLASK inicio() !!!\n',e)
+
+
+@app.route('/editar/<string:nombre>',   methods=['GET','PUT'])
+def editar(nombre):
+    try:
+        baseDatos = app.config['DB']
+        data = request.get_json()  # datos enviados en formato JSON
+
+        # Buscar el producto en la base de datos
+        for producto in baseDatos:
+            if producto["nombre"].lower() == nombre.lower():
+                # Actualizar los campos recibidos
+                producto.update({
+                    "nombre": data.get("nombre", producto["nombre"]),
+                    "categoria": data.get("categoria", producto["categoria"]),
+                    "descripcion": data.get("descripcion", producto["descripcion"]),
+                    "precio": data.get("precio", producto["precio"]),
+                    "stock": data.get("stock", producto["stock"]),
+                    "vencimiento": data.get("vencimiento", producto["vencimiento"])
+                })
+                return jsonify({
+                    "mensaje": f"Producto '{nombre}' actualizado correctamente.",
+                    "producto": producto
+                }), 200
+
+        # Si no se encuentra el producto
+        return jsonify({"error": f"Producto '{nombre}' no encontrado."}), 404
+
+    except Exception as e:
+        print("!!! Error FLASK editar_producto() !!!\n", e)
+        return jsonify({"error": "Error interno en el servidor"}), 500
+
 
 
 #Ejecutar
