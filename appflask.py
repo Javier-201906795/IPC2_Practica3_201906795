@@ -44,6 +44,13 @@ def agregar():
         data = request.get_json()  # datos enviados en formato JSON
 
         print(data)
+
+        #Validar si estan todos los datos
+        camposobligatorios = ["nombre","categoria","descripcion","precio","stock","vencimiento"]
+        for campo in camposobligatorios:
+            if campo not in data:
+                return jsonify({'Error':f'Falta el campo -> {campo} <- para crear el producto'})
+
         return jsonify(data)
     except Exception as e:
         print("!!! Error FLASK agregar() !!!\n", e)
