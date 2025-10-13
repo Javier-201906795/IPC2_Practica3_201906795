@@ -12,7 +12,12 @@ cors = CORS(app)
 @app.route('/',   methods=['GET','POST'])
 def inicio():
     try:
-        return 'hola mundo'
+        datos = {
+            "mensaje": "Hola mundo",
+            "estado": "ok",
+            "metodo": request.method
+        }
+        return jsonify(datos) 
     except Exception as e:
         print('!!! Error FLASK inicio() !!!\n',e)
 
