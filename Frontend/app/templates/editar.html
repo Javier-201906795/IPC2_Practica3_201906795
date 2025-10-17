@@ -51,7 +51,9 @@
           </div>
           <!-- Formulario de creación: conecta la acción con el endpoint POST del backend -->
           <div class="card-body bg-light">
-            <form class="row g-3">
+            <form class="row g-3"  method="POST" action="/guardar_producto/">
+              
+              {% csrf_token %}
               <div class="col-md-6">
                 <label class="form-label" for="crearNombre">Nombre</label>
                 <input class="form-control" id="crearNombre" name="nombre" required />
