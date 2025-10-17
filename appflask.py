@@ -97,7 +97,7 @@ def editar(nombre):
         return jsonify({"error": f"Producto '{nombre}' no encontrado."}), 404
 
     except Exception as e:
-        print("!!! Error FLASK editar_producto() !!!\n", e)
+        print("!!! Error FLASK editar() !!!\n", e)
         return jsonify({"error": "Error interno en el servidor"}), 500
     
 
@@ -105,30 +105,23 @@ def editar(nombre):
 def eliminar(nombre):
     try:
         baseDatos = app.config['DB']
-        data = request.get_json()  # datos enviados en formato JSON
+        print('Eliminar producto', eliminar)
 
         # Buscar el producto en la base de datos
         for producto in baseDatos:
             if producto["nombre"].lower() == nombre.lower():
                 print("Producto encontrado:", producto)
-                # Actualizar los campos recibidos y si no fue enviado el dato colocar el valor anterior
-                producto.update({
-                    "categoria": data.get("categoria", producto["categoria"]),
-                    "descripcion": data.get("descripcion", producto["descripcion"]),
-                    "precio": data.get("precio", producto["precio"]),
-                    "stock": data.get("stock", producto["stock"]),
-                    "vencimiento": data.get("vencimiento", producto["vencimiento"])
-                })
+                #Eliminar producto
+                baseDatos.remove(producto)
                 return jsonify({
-                    "mensaje": f"Producto '{nombre}' actualizado correctamente.",
-                    "producto": producto
+                    "mensaje": f"Producto '{nombre}' eliminado correctamente.",
                 }), 200
 
         # Si no se encuentra el producto
         return jsonify({"error": f"Producto '{nombre}' no encontrado."}), 404
 
     except Exception as e:
-        print("!!! Error FLASK editar_producto() !!!\n", e)
+        print("!!! Error FLASK eliminar() !!!\n", e)
         return jsonify({"error": "Error interno en el servidor"}), 500
 
 
