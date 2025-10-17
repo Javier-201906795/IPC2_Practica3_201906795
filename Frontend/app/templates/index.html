@@ -41,6 +41,15 @@
       <div class="text-center mb-5">
         <h1 class="fw-bold display-5">Catálogo de Productos</h1>
       </div>
+      
+      <p>{{ productos }}</p>
+      <ul>
+      {% for p in productos %}
+          <li> >{{ p.nombre }} </li>
+      {% empty %}
+          <li>No hay productos disponibles.</li>
+      {% endfor %}
+      </ul>
 
       <!-- Lista deTarjetas de producto -->
       <div class="row g-4 g-xl-5">

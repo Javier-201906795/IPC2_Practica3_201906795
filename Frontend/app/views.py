@@ -17,10 +17,12 @@ def obtenerlista(request):
         headers = {'Content-Type': 'application/json'}
         response = requests.get(endpoint, headers=headers)   
         print(response.status_code, response.text)
-
-       
-
-        return render(request, 'index.html')
+        #Convertir en json 
+        productos = response.json()
+        #Almacenar 
+        contexto = {'productos': productos}
+        #Enviar
+        return render(request, 'index.html', contexto)
     except Exception as e:
         print('Error en obtenerlista()\n',e)
         return render(request, 'index.html')
