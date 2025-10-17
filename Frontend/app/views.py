@@ -5,3 +5,6 @@ import requests
 
 def index(request):
     return render(request, 'index.html')
+
+def editar(request):
+    return render(request, 'editar.html')
