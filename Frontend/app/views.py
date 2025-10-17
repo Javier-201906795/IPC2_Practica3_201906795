@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import requests
 import json
 
@@ -39,13 +39,10 @@ def guardar_producto(request):
             stock = request.POST.get('stock')
             vencimiento = request.POST.get('vencimiento')
 
-            # Aquí puedes guardar el producto en la base de datos o procesarlo
             print(nombre, categoria, descripcion, precio, stock, vencimiento)
-
-            # Ejemplo simple: redirigir a la página principal con mensaje
-            return HttpResponse(f"Producto '{nombre}' guardado correctamente.")
+            
+            return redirect('/')
     
-        return HttpResponse("Método no permitido", status=405)
     except Exception as e:
-        print('Error en obtenerlista()\n',e)
-        return render(request, 'index.html')
+        print('Error en guardar_producto()\n',e)
+        return redirect('/editar/')
