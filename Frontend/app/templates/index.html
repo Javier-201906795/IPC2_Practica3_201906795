@@ -45,7 +45,11 @@
       <p>{{ productos }}</p>
       <ul>
       {% for p in productos %}
-          <li> >{{ p.nombre }} </li>
+          <li>
+              <strong>{{ p.nombre }}</strong> — {{ p.categoria }}<br>
+              {{ p.descripcion }}<br>
+              Precio: {{ p.precio }} | Stock: {{ p.stock }} | Vence: {{ p.vencimiento }}
+          </li>
       {% empty %}
           <li>No hay productos disponibles.</li>
       {% endfor %}
