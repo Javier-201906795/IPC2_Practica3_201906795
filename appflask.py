@@ -70,8 +70,39 @@ def agregar():
         return jsonify({"error": "Error interno en agregar()"}), 500
 
 
-@app.route('/editar/<string:nombre>',   methods=['GET','PUT'])
+@app.route('/editar/<string:nombre>',   methods=['PUT'])
 def editar(nombre):
+    try:
+        baseDatos = app.config['DB']
+        data = request.get_json()  # datos enviados en formato JSON
+
+        # Buscar el producto en la base de datos
+        for producto in baseDatos:
+            if producto["nombre"].lower() == nombre.lower():
+                print("Producto encontrado:", producto)
+                # Actualizar los campos recibidos y si no fue enviado el dato colocar el valor anterior
+                producto.update({
+                    "categoria": data.get("categoria", producto["categoria"]),
+                    "descripcion": data.get("descripcion", producto["descripcion"]),
+                    "precio": data.get("precio", producto["precio"]),
+                    "stock": data.get("stock", producto["stock"]),
+                    "vencimiento": data.get("vencimiento", producto["vencimiento"])
+                })
+                return jsonify({
+                    "mensaje": f"Producto '{nombre}' actualizado correctamente.",
+                    "producto": producto
+                }), 200
+
+        # Si no se encuentra el producto
+        return jsonify({"error": f"Producto '{nombre}' no encontrado."}), 404
+
+    except Exception as e:
+        print("!!! Error FLASK editar_producto() !!!\n", e)
+        return jsonify({"error": "Error interno en el servidor"}), 500
+    
+
+@app.route('/eliminar/<string:nombre>',   methods=['PUT'])
+def eliminar(nombre):
     try:
         baseDatos = app.config['DB']
         data = request.get_json()  # datos enviados en formato JSON
