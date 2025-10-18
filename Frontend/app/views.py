@@ -12,7 +12,7 @@ def index(request):
 def editar(request):
     return render(request, 'editar.html')
 
-def obtenerlista(request):
+def listaproductos():
     try:
         #obtener del backend
         headers = {'Content-Type': 'application/json'}
@@ -20,6 +20,14 @@ def obtenerlista(request):
         # print(response.status_code, response.text)
         #Convertir en json 
         productos = response.json()
+        return productos
+    except Exception as e:
+        print('Error ne listaproductos()')
+
+
+def obtenerlista(request):
+    try:
+        productos = listaproductos()
         #Almacenar 
         contexto = {'productos': productos}
         #Enviar
@@ -41,7 +49,7 @@ def guardar_producto(request):
 
             print(nombre, categoria, descripcion, precio, stock, vencimiento)
 
-            #Back-end
+            #Back-end crear producto
             try:
                 headers = {'Content-Type': 'application/json'}
                 data = {
