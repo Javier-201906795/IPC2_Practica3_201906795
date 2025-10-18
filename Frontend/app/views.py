@@ -17,7 +17,7 @@ def obtenerlista(request):
         #obtener del backend
         headers = {'Content-Type': 'application/json'}
         response = requests.get(endpoint, headers=headers)   
-        print(response.status_code, response.text)
+        # print(response.status_code, response.text)
         #Convertir en json 
         productos = response.json()
         #Almacenar 
@@ -40,7 +40,26 @@ def guardar_producto(request):
             vencimiento = request.POST.get('vencimiento')
 
             print(nombre, categoria, descripcion, precio, stock, vencimiento)
-            
+
+            #Back-end
+            try:
+                headers = {'Content-Type': 'application/json'}
+                data = {
+                        "categoria": categoria,
+                        "descripcion": descripcion,
+                        "nombre": nombre,
+                        "precio": precio,
+                        "stock": stock,
+                        "vencimiento": vencimiento
+                        }
+                
+                url = endpoint + 'agregar'
+                print('url ', url)
+                response = requests.post(url,json=data,headers=headers)  
+                print(response.status_code, response.text)
+            except Exception as e:
+                print('Error en el backend al agregar producto\n',e)
+
             return redirect('/')
     
     except Exception as e:
