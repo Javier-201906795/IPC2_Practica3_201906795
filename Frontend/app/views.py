@@ -10,7 +10,14 @@ def index(request):
     return render(request, 'index.html')
 
 def editar(request):
-    return render(request, 'editar.html')
+    try:
+        productos = listaproductos()
+        #Almacenar 
+        contexto = {'productos': productos}
+
+        return render(request, 'editar.html', contexto)
+    except Exception as e:
+        print('Error en editar()\n',e)
 
 def listaproductos():
     try:
