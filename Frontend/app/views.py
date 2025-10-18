@@ -80,3 +80,18 @@ def guardar_producto(request):
     except Exception as e:
         print('Error en guardar_producto()\n',e)
         return redirect('/editar/')
+
+
+def eliminar(request,productoN):
+    try:
+        print(productoN)
+        #Backend
+        headers = {'Content-Type': 'application/json'}
+        url = endpoint + "eliminar/" + str(productoN)
+        response = requests.put(url, headers=headers)
+        print(response.status_code, response.text)
+
+        return redirect('/')
+    except Exception as e:
+        print('Error en eliminar()\n',e)
+        return redirect('/')
