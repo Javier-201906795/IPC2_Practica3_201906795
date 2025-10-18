@@ -5,4 +5,4 @@ python appflask.py
 
 # Frontend
 cd /Frontend
-python manage.py
+python manage.py runserver
