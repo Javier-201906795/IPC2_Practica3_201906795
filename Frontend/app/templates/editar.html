@@ -198,8 +198,9 @@
             <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Cerrar"></button>
           </div>
           <div class="modal-body bg-light">
-            <!-- Formulario de actualización: completa los campos con datos del producto seleccionado -->
-            <form class="row g-3" id="formActualizarProducto">
+            <!-- Formulario de actualización -->
+            <form class="row g-3" id="formActualizarProducto{{contadord}}"  method="POST" action="/editarproducto/{{p.nombre}}/">
+              {% csrf_token %}
               <div class="col-md-6">
                 <label class="form-label" for="modalActualizarNombre">Nombre</label>
                 <input class="form-control" id="modalActualizarNombre" name="nombre" readonly value="{{p.nombre}}"/>
@@ -256,7 +257,7 @@
             <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">
               Cancelar
             </button>
-            <button class="btn btn-warning text-dark" type="submit" form="formActualizarProducto">
+            <button class="btn btn-warning text-dark" type="submit" form="formActualizarProducto{{contadord}}">
               Guardar cambios
             </button>
           </div>

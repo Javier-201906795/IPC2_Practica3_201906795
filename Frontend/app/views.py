@@ -95,3 +95,41 @@ def eliminar(request,productoN):
     except Exception as e:
         print('Error en eliminar()\n',e)
         return redirect('/')
+
+
+def editarproducto(request,productoN):
+    try:
+        print(productoN)
+
+        if request.method == 'POST':
+            nombre = request.POST.get('nombre')
+            categoria = request.POST.get('categoria')
+            descripcion = request.POST.get('descripcion')
+            precio = request.POST.get('precio')
+            stock = request.POST.get('stock')
+            vencimiento = request.POST.get('vencimiento')
+        
+        print(nombre, categoria, descripcion, precio, stock, vencimiento)
+
+        data = {
+            "categoria": categoria,
+            "descripcion": descripcion,
+            "precio": precio,
+            "stock": stock,
+            "vencimiento": vencimiento
+        }
+
+        json_data = json.dumps(data)
+
+        #Backend
+        headers = {'Content-Type': 'application/json'}
+        url = endpoint + "editar/" + str(productoN)
+
+        print(json_data)
+        response = requests.put(url, json=data, headers=headers)
+        print(response.status_code, response.text)
+
+        return redirect('/')
+    except Exception as e:
+        print('Error en eliminar()\n',e)
+        return redirect('/')
